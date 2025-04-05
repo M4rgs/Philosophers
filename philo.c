@@ -6,13 +6,12 @@
 /*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/03/31 12:12:38 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:22:21 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
-volatile int someone_died = 0;  // Shared flag
 
 /*void eat(Philosopher *philo) {
     int left_fork = philo->id;
@@ -51,13 +50,13 @@ void	*ft_func(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
 	philo->last_meal_time = get_time_ms();
-	while (!someone_died)
+	while (!philo->someone_died)
 	{
 		 long current_time = get_time_ms();
 		if (current_time - philo->last_meal_time > philo->infos.to_die * 1000)
 		{
 			printf("philo Number : %d is dead lol\n", philo->id);
-			someone_died = 1;
+			philo->someone_died = 1;
 			return (NULL);
 		}
 		thinking (philo);
@@ -109,6 +108,7 @@ int	main(int ac, char **av)
 		{
 			philo[i].id = i;
 			philo[i].lfork = &forks[i];
+			philo[i].someone_died = 0;
 			philo[i].rfork = &forks[(i + 1) % infos.num_philo];
 			philo[i].infos = infos;
 			pthread_create(&philo[i].thread, NULL, ft_func, &philo[i]);

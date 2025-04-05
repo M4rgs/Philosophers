@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/03/31 03:52:27 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:21:29 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_philo
 	long last_meal_time;
 	pthread_t thread;
 	pthread_mutex_t *forks;
+	int someone_died;
 	pthread_mutex_t *lfork;
 	t_infos infos;
 	pthread_mutex_t *rfork;
