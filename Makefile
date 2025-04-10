@@ -1,12 +1,12 @@
 NAME = philosophers
 
-SRCS = philo.c helper_fun.c
+SRCS = philo.c helper_fun.c init_args.c
 
 CC = cc
 
 HEADER = philo.h
 
-CFLAGS = -Wall #-Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ = $(SRCS:.c=.o)
 

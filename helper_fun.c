@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_fun.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/03/29 19:39:12 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:59:08 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,35 @@ int	ft_atoi(char *s)
 		if ((resu * signe > 2147483647 || resu * signe < -2147483648)
 			|| (s[i] < '0' || s[i] > '9'))
 		{
-			ft_putstr_fd("Error: Mis Args\n", 2);
-			exit(1);
+			err_args(2);
 		}
 		i++;
 	}
 	return (resu * signe);
+}
+
+void	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f, int num)
+{
+	int	i;
+
+	i = 0;
+	if (f == 0)
+	{
+		while (i < num)
+		{
+			pthread_join(philo[i].thread, NULL);
+			i++;
+		}
+		free(forks);
+		free(philo);
+	}
+	if (f == 1)
+	{
+		if (forks)
+			free(forks);
+		if (philo)
+			free(philo);
+		ft_putstr_fd("Error : <Allocation>\nFailed to allocate\n", 1);
+		exit(1);
+	}
 }
