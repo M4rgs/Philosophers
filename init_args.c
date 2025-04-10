@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/10 01:00:06 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/10 06:12:12 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,30 @@ void	init_args(t_infos *infos, char **av)
 	}
 }
 
-void	*ft_routine(void *t)
-{
-	(void)t;
-	printf("ghggggg");
-	return (NULL);
-}
-
 void	init_threads(t_infos *infos)
 {
 	int				i;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
 	t_philo			*philo;
 
-	i = 0;
+	i = -1;
 	philo = malloc(infos->num_philo * sizeof(t_philo));
 	forks = malloc(infos->num_philo * sizeof(pthread_mutex_t));
 	if (!philo || !forks)
 		ft_free_args(forks, philo, 1, 0);
-	while (i < infos->num_philo)
-	{
+	pthread_mutex_init(&print, NULL);
+	while (++i < infos->num_philo)
 		pthread_mutex_init(&forks[i], NULL);
-		i++;
-	}
-	i = 0;
-	while (i < infos->num_philo)
+	i = -1;
+	while (++i < infos->num_philo)
 	{
-		philo[i].id = i;
+		philo[i].id = i + 1;
 		philo[i].lfork = &forks[i];
 		philo[i].rfork = &forks[(i + 1) % infos->num_philo];
+		philo[i].print = &print;
+		philo[i].infos = infos;
 		pthread_create(&philo[i].thread, NULL, ft_routine, &philo[i]);
-		i++;
 	}
 	ft_free_args(forks, philo, 0, infos->num_philo);
 }

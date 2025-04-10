@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/10 00:55:33 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/10 04:17:00 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_infos
 	int	to_die;
 	int	num_philo;
 	int	to_eat;
+	int	has_ate;
 	int	to_sleep;
 	int	must_eat;
 }	t_infos;
@@ -35,6 +36,10 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
+	t_infos			*infos;
+	pthread_mutex_t	*print;
+	long			died;
+	long			last_meal;
 }	t_philo;
 
 int		ft_atoi(char *s);
@@ -43,5 +48,6 @@ void	err_args(int f);
 void	init_threads(t_infos *infos);
 void	init_args(t_infos *infos, char **av);
 void	ft_free_args(pthread_mutex_t *forks, t_philo *philos, int f, int num);
+void	*ft_routine(void *arg);
 
 #endif

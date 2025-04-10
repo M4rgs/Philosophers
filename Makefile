@@ -1,6 +1,6 @@
 NAME = philosophers
 
-SRCS = philo.c helper_fun.c init_args.c
+SRCS = philo.c helper_fun.c init_args.c routine.c
 
 CC = cc
 
