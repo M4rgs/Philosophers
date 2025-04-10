@@ -28,6 +28,8 @@ fclean:	clean
 
 re:	fclean all
 
+.PHONY: clean
+
 git:
 	git add .
 	git commit -m "Philosophers"

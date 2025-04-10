@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/10 01:05:11 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/10 06:22:47 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	err_args(int f)
 int	main(int ac, char **av)
 {
 	t_infos			infos;
-	int				i;
 
-	i = 0;
 	if (ac < 5 || ac > 6)
 		err_args(1);
 	init_args(&infos, av);
