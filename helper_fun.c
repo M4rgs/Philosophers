@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/10 00:59:08 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/11 04:08:12 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,13 @@ int	ft_atoi(char *s)
 	return (resu * signe);
 }
 
-void	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f, int num)
+int	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f)
 {
-	int	i;
-
-	i = 0;
-	if (f == 0)
-	{
-		while (i < num)
-		{
-			pthread_join(philo[i].thread, NULL);
-			i++;
-		}
+	if (forks)
 		free(forks);
+	if (philo)
 		free(philo);
-	}
 	if (f == 1)
-	{
-		if (forks)
-			free(forks);
-		if (philo)
-			free(philo);
-		ft_putstr_fd("Error : <Allocation>\nFailed to allocate\n", 1);
-		exit(1);
-	}
+		return (ft_putstr_fd("Error : <Allocation>\nFailed to allocate\n", 1), 1);
+	return (0);
 }
