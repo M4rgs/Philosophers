@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/11 04:09:37 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/11 22:04:55 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		init_args(t_infos *infos, char **av);
 int		ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f);
 void	*ft_routine(void *arg);
 long	timestamp(void);
+void	ft_eat(t_philo *philo);
 int		launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
 
 #endif
