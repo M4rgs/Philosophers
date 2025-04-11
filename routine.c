@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/11 22:10:16 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/11 22:23:19 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ long	timestamp(void)
 
 void	print_routine(t_philo *philo, char *s)
 {
+	philo->infos->daba = timestamp();
 	pthread_mutex_lock(philo->print);
-	printf("philo number %d %s", philo->id, s);
+	printf("%ld %d %s", philo->infos->daba - philo->infos->start, philo->id, s);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -32,16 +33,16 @@ void	ft_eat(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->lfork);
-		print_routine(philo, "has taken a fork 1\n");
+		print_routine(philo, "has taken a fork\n");
 		pthread_mutex_lock(philo->rfork);
-		print_routine(philo, "has taken a fork 2\n");
+		print_routine(philo, "has taken a fork\n");
 	}
 	else
 	{
 		pthread_mutex_lock(philo->rfork);
-		print_routine(philo, "has taken a fork 1\n");
+		print_routine(philo, "has taken a fork\n");
 		pthread_mutex_lock(philo->lfork);
-		print_routine(philo, "has taken a fork 2\n");
+		print_routine(philo, "has taken a fork\n");
 	}
 	print_routine(philo, "is eating\n");
 	usleep(philo->infos->to_eat * 1000);

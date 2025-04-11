@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/11 22:04:55 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/11 22:16:15 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_infos
 	int		must_eat;
 	size_t	last_meal;
 	size_t	start;
+	size_t	daba;
 }	t_infos;
 
 typedef struct s_philo
