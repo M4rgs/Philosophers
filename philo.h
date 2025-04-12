@@ -22,16 +22,15 @@
 
 typedef struct s_infos
 {
-	size_t	to_die;
 	int		num_philo;
+	size_t	to_die;
 	int		to_eat;
-	int		has_ate;
 	int		to_sleep;
 	int		must_eat;
-	int		hsa_ate;
 	size_t	last_meal;
-	size_t	time;
 	size_t	start;
+	int		has_ate;
+	size_t	time;
 	size_t	total_ate;
 }	t_infos;
 
@@ -57,5 +56,4 @@ long	timestamp(void);
 void	ft_eat(t_philo *philo);
 int		launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
 void	death_checker(t_philo *philo);
-
 #endif

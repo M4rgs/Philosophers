@@ -18,8 +18,12 @@ int	init_args(t_infos *infos, char **av)
 	infos->to_die = ft_atoi(av[2]);
 	infos->to_eat = ft_atoi(av[3]);
 	infos->to_sleep = ft_atoi(av[4]);
+	infos->must_eat = -1;
 	infos->last_meal = timestamp();
 	infos->start = timestamp();
+	infos->has_ate = 0;
+	infos->time = 0;
+	infos->total_ate = 0;
 	if (av[5])
 	{
 		infos->must_eat = ft_atoi(av[5]);
@@ -42,14 +46,12 @@ void	death_checker(t_philo *philo)
 	while (1)
 	{
 		if ((int)philo[i].infos->total_ate == philo[i].infos->num_philo)
-		{
 			return ;
-		}
 		if ((size_t)timestamp() - philo[i].last_meal > philo->infos->to_die)
 		{
 			usleep(100);
 			pthread_mutex_lock(philo->print);
-			printf("%ldms %d died\n", (size_t)timestamp() - \
+			printf("%ld %d died\n", (size_t)timestamp() - \
 				philo->infos->start, philo->id);
 			return ;
 		}
@@ -67,8 +69,10 @@ int	init_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo)
 	if (pthread_mutex_init(&print, NULL) == -1)
 		return (ft_free_args(forks, philo, 1));
 	while (++i < infos->num_philo)
+	{
 		if (pthread_mutex_init(&forks[i], NULL) == -1)
 			return (ft_free_args(forks, philo, 1));
+	}
 	i = -1;
 	while (++i < infos->num_philo)
 	{

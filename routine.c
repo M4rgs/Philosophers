@@ -24,7 +24,7 @@ void	print_routine(t_philo *philo, char *s)
 {
 	philo->infos->time = (size_t)timestamp();
 	pthread_mutex_lock(philo->print);
-	printf("%ldms %d %s", (size_t)timestamp() - philo->infos->start, \
+	printf("%ld %d %s", (size_t)timestamp() - philo->infos->start, \
 		philo->id, s);
 	pthread_mutex_unlock(philo->print);
 }
