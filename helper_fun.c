@@ -57,6 +57,6 @@ int	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f)
 	if (philo)
 		free(philo);
 	if (f == 1)
-		return (ft_putstr_fd("Error : <Allocation>\nFailed to allocate\n", 1), 1);
+		return (ft_putstr_fd("Error : <Allocation>\n", 1), 1);
 	return (0);
 }

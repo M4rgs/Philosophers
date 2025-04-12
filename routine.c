@@ -22,9 +22,10 @@ long	timestamp(void)
 
 void	print_routine(t_philo *philo, char *s)
 {
-	philo->infos->daba = timestamp();
+	philo->infos->time = (size_t)timestamp();
 	pthread_mutex_lock(philo->print);
-	printf("%ld %d %s", philo->infos->daba - philo->infos->start, philo->id, s);
+	printf("%ldms %d %s", (size_t)timestamp() - philo->infos->start, \
+		philo->id, s);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -45,7 +46,11 @@ void	ft_eat(t_philo *philo)
 		print_routine(philo, "has taken a fork\n");
 	}
 	print_routine(philo, "is eating\n");
+	philo->infos->has_ate++;
+	if (philo->infos->has_ate == philo->infos->must_eat)
+		philo->infos->total_ate++;
 	usleep(philo->infos->to_eat * 1000);
+	philo->last_meal = (size_t)timestamp();
 	pthread_mutex_unlock(philo->rfork);
 	pthread_mutex_unlock(philo->lfork);
 }
@@ -55,6 +60,7 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	philo->last_meal = timestamp();
 	while (1)
 	{
 		ft_eat(philo);

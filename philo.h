@@ -28,9 +28,11 @@ typedef struct s_infos
 	int		has_ate;
 	int		to_sleep;
 	int		must_eat;
+	int		hsa_ate;
 	size_t	last_meal;
+	size_t	time;
 	size_t	start;
-	size_t	daba;
+	size_t	total_ate;
 }	t_infos;
 
 typedef struct s_philo
@@ -41,7 +43,7 @@ typedef struct s_philo
 	pthread_mutex_t	*rfork;
 	t_infos			*infos;
 	pthread_mutex_t	*print;
-	long			died;
+	size_t			last_meal;
 }	t_philo;
 
 int		ft_atoi(char *s);
@@ -54,5 +56,6 @@ void	*ft_routine(void *arg);
 long	timestamp(void);
 void	ft_eat(t_philo *philo);
 int		launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
+void	death_checker(t_philo *philo);
 
 #endif

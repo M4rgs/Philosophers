@@ -23,7 +23,8 @@ int	err_args(int f)
 	}
 	if (f == 2)
 	{
-		ft_putstr_fd("Error : <arguments>\n Params should be only numbers\n", 1);
+		ft_putstr_fd("Error : <arguments>\n\
+		 Params should be only numbers\n", 1);
 		return (1);
 	}
 	if (f == 3)
@@ -52,5 +53,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (launch_threads(&infos, forks, philo) == 1)
 		return (1);
-	ft_free_args(forks, philo, 0);
+	death_checker(philo);
+	return (ft_free_args(forks, philo, 0));
 }
