@@ -77,7 +77,5 @@ int	ft_free_args(t_infos *infos, t_philo *philo, pthread_mutex_t *mutex, int f)
 		free(mutex);
 	if (philo)
 		free(philo);
-	if (f == 1)
-		return (ft_putstr_fd("Error : <Allocation>\n", 1), 1);
 	return (f);
 }

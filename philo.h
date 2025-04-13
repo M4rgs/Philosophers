@@ -28,7 +28,9 @@ typedef struct s_infos
 	int				to_sleep;
 	int				must_eat;
 	int				total_ate;
+	int				is_dead;
 	unsigned long	time;
+	pthread_mutex_t	dead_mutex;
 }	t_infos;
 
 typedef struct s_philo

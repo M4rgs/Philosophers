@@ -23,6 +23,8 @@ int	init_args(t_infos *infos, char **av)
 	infos->time = timestamp();
 	infos->must_eat = -1;
 	infos->total_ate = 0;
+	infos->is_dead = 0;
+	pthread_mutex_init(&infos->dead_mutex, NULL);
 	if (av[5])
 	{
 		infos->must_eat = ft_atoi(av[5]);

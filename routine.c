@@ -29,6 +29,13 @@ void	*ft_routine(void *arg)
 	philo->last_meal = timestamp();
 	while (1)
 	{
+		pthread_mutex_lock(&philo->infos->dead_mutex);
+		if (philo->infos->is_dead)
+		{
+			pthread_mutex_unlock(&philo->infos->dead_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->infos->dead_mutex);
 		pthread_mutex_lock(&philo->mutex[philo->id - 1]);
 		print_routine(philo, real_time(philo), "has taken a fork");
 		pthread_mutex_lock(&philo->mutex[philo->id % philo->infos->num_philo]);
@@ -64,8 +71,13 @@ void	death_checker(t_philo *philo, t_infos *infos)
 		if (timestamp() - philo[i].last_meal > infos->to_die)
 		{
 			usleep(100);
-			pthread_mutex_lock(philo->print);
-			printf("%lu %d died\n", real_time(philo), philo->id);
+			pthread_mutex_lock(&infos->dead_mutex);
+			if (infos->is_dead == 0)
+			{
+				printf("%lu %d died\n", real_time(philo), philo->id);
+				philo->infos->is_dead = 1;
+			}
+			pthread_mutex_unlock(&infos->dead_mutex);
 			dest_mutex(philo);
 			ft_free_args(infos, philo, 0, 0);
 			return ;
