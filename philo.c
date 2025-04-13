@@ -37,22 +37,29 @@ int	err_args(int f)
 
 int	main(int ac, char **av)
 {
-	t_infos			infos;
+	t_infos			*infos;
+	pthread_t		*thread;
 	t_philo			*philo;
-	pthread_mutex_t	*forks;
+	int				i;
 
 	if (ac < 5 || ac > 6)
 		return (err_args(1));
-	if (init_args(&infos, av) == 1)
-		return (1);
-	philo = malloc(infos.num_philo * sizeof(t_philo));
-	forks = malloc(infos.num_philo * sizeof(pthread_mutex_t));
-	if (!forks || !philo)
-		return (ft_free_args(forks, philo, 1));
-	if (init_threads(&infos, forks, philo) == 1)
-		return (1);
-	if (launch_threads(&infos, forks, philo) == 1)
-		return (1);
-	death_checker(philo, forks);
-	return (ft_free_args(forks, philo, 0));
+	infos = (t_infos *)malloc(sizeof(t_infos));
+	if (init_args(infos, av) == 1)
+		return (ft_free_args(infos, 0, 0, 1));
+	philo = (t_philo *)malloc(infos->num_philo * sizeof(t_philo));
+	if (init_mutex(philo, infos) == 1)
+		return (ft_free_args(infos, philo, 0, 1));
+	thread = (pthread_t *)malloc(infos->num_philo * sizeof(pthread_t));
+	if (!thread)
+		return (ft_free_args(infos, philo, 0, 1));
+	i = -1;
+	while (++i < infos->num_philo)
+	{
+		pthread_create(&thread[i], NULL, ft_routine, philo + i);
+		usleep(100);
+	}
+	death_checker(philo, infos);
+	free(thread);
+	return (0);
 }

@@ -22,39 +22,36 @@
 
 typedef struct s_infos
 {
-	int		num_philo;
-	size_t	to_die;
-	int		to_eat;
-	int		to_sleep;
-	int		must_eat;
-	size_t	last_meal;
-	size_t	start;
-	int		has_ate;
-	size_t	time;
-	size_t	total_ate;
+	int				num_philo;
+	unsigned long	to_die;
+	int				to_eat;
+	int				to_sleep;
+	int				must_eat;
+	int				total_ate;
+	unsigned long	time;
 }	t_infos;
 
 typedef struct s_philo
 {
+	int				ate;
 	int				id;
-	pthread_t		thread;
-	pthread_mutex_t	*lfork;
-	pthread_mutex_t	*rfork;
 	t_infos			*infos;
+	pthread_mutex_t	*mutex;
 	pthread_mutex_t	*print;
-	size_t			last_meal;
+	unsigned long	last_meal;
 }	t_philo;
 
-int		ft_atoi(char *s);
-void	ft_putstr_fd(char *s, int fd);
-int		err_args(int f);
-int		init_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
-int		init_args(t_infos *infos, char **av);
-int		ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f);
-void	*ft_routine(void *arg);
-long	timestamp(void);
-void	ft_eat(t_philo *philo);
-int		launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
-void	death_checker(t_philo *philo, pthread_mutex_t *forks);
-void	ft_dextroy_mutex(t_philo *philo);
+int				ft_atoi(char *s);
+void			ft_putstr_fd(char *s, int fd);
+int				err_args(int f);
+int				init_args(t_infos *infos, char **av);
+int				init_mutex(t_philo *philo, t_infos *infos);
+void			*ft_routine(void *arg);
+unsigned long	timestamp(void);
+unsigned long	real_time(t_philo *philo);
+int				ft_free_args(t_infos *infos, t_philo *philo, \
+	pthread_mutex_t *mutex, int f);
+void			death_checker(t_philo *philo, t_infos *infos);
+void			dest_mutex(t_philo *philo);
+
 #endif

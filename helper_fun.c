@@ -12,6 +12,25 @@
 
 #include "philo.h"
 
+unsigned long	timestamp(void)
+{
+	struct timeval	time;
+	unsigned long	l;
+	unsigned long	s;
+	unsigned long	u;
+
+	gettimeofday(&time, NULL);
+	s = (time.tv_sec * 1000);
+	u = (time.tv_usec / 1000);
+	l = s + u;
+	return (l);
+}
+
+unsigned long	real_time(t_philo *philo)
+{
+	return (timestamp() - philo->infos->time);
+}
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -50,15 +69,15 @@ int	ft_atoi(char *s)
 	return (resu * signe);
 }
 
-int	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f)
+int	ft_free_args(t_infos *infos, t_philo *philo, pthread_mutex_t *mutex, int f)
 {
-	if (forks)
-		free(forks);
+	if (infos)
+		free(infos);
+	if (mutex)
+		free(mutex);
 	if (philo)
 		free(philo);
 	if (f == 1)
 		return (ft_putstr_fd("Error : <Allocation>\n", 1), 1);
-	return (0);
+	return (f);
 }
-
-

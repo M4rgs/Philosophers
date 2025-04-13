@@ -14,15 +14,14 @@
 
 int	init_args(t_infos *infos, char **av)
 {
+	if (infos == NULL)
+		return (1);
 	infos->num_philo = ft_atoi(av[1]);
 	infos->to_die = ft_atoi(av[2]);
 	infos->to_eat = ft_atoi(av[3]);
 	infos->to_sleep = ft_atoi(av[4]);
+	infos->time = timestamp();
 	infos->must_eat = -1;
-	infos->last_meal = timestamp();
-	infos->start = timestamp();
-	infos->has_ate = 0;
-	infos->time = 0;
 	infos->total_ate = 0;
 	if (av[5])
 	{
@@ -38,69 +37,53 @@ int	init_args(t_infos *infos, char **av)
 	return (0);
 }
 
-void	death_checker(t_philo *philo, pthread_mutex_t *forks)
+static void	init_params(t_philo *philo, t_infos *infos, \
+	pthread_mutex_t *mutex, pthread_mutex_t *pon)
 {
 	int	i;
 
 	i = 0;
-	while (1)
+	while (i < infos->num_philo)
 	{
-		if ((int)philo[i].infos->total_ate == philo[i].infos->num_philo)
-		{
-			//ft_dextroy_mutex(philo);
-			//ft_free_args(forks, philo, 0);
-			return ;
-		}
-		if ((size_t)timestamp() - philo[i].last_meal > \
-			(unsigned long)philo->infos->to_die)
-		{
-			usleep(100);
-			pthread_mutex_lock(philo->print);
-			printf("%lu %d died\n", (size_t)timestamp() - \
-				philo->infos->start, philo->id);
-			//ft_dextroy_mutex(philo);
-			//ft_free_args(forks, philo, 0);
-			return ;
-		}
-		i = (i + 1) % philo->infos->num_philo;
-		usleep(500);
+		philo[i].id = i + 1;
+		philo[i].ate = 0;
+		philo[i].mutex = mutex;
+		philo[i].print = pon;
+		philo[i].infos = infos;
+		i++;
 	}
 }
 
-int	init_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo)
+int	init_mutex(t_philo *philo, t_infos *infos)
 {
+	pthread_mutex_t	*mutex;
+	pthread_mutex_t	pon;
 	int				i;
-	pthread_mutex_t	print;
 
-	i = -1;
-	if (pthread_mutex_init(&print, NULL) == -1)
-		return (ft_free_args(forks, philo, 1));
-	while (++i < infos->num_philo)
+	i = 0;
+	if (!philo)
+		return (1);
+	mutex = malloc(sizeof(pthread_mutex_t) * infos->num_philo);
+	if (!mutex)
+		return (ft_free_args(infos, philo, mutex, 1));
+	while (i < infos->num_philo)
 	{
-		if (pthread_mutex_init(&forks[i], NULL) == -1)
-			return (ft_free_args(forks, philo, 1));
+		if (pthread_mutex_init(&mutex[i], NULL) == 1)
+			return (ft_free_args(infos, philo, mutex, 1));
+		i++;
 	}
-	i = -1;
-	while (++i < infos->num_philo)
-	{
-		philo[i].id = i + 1;
-		philo[i].lfork = &forks[i];
-		philo[i].rfork = &forks[(i + 1) % infos->num_philo];
-		philo[i].print = &print;
-		philo[i].infos = infos;
-	}
+	if (pthread_mutex_init(&pon, NULL))
+		return (ft_free_args(infos, philo, mutex, 1));
+	init_params(philo, infos, mutex, &pon);
+	free(mutex);
 	return (0);
 }
 
-int	launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo)
+void	dest_mutex(t_philo *philo)
 {
 	int	i;
 
-	i = -1;
-	while (++i < infos->num_philo)
-	{
-		if (pthread_create(&philo[i].thread, NULL, ft_routine, &philo[i]) == -1)
-			return (ft_free_args(forks, philo, 1));
-	}
-	return (0);
+	i = 0;
+	while (i < philo->infos->num_philo)
+		pthread_mutex_destroy(&philo->mutex[i++]);
 }
