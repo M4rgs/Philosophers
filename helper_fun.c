@@ -60,3 +60,5 @@ int	ft_free_args(pthread_mutex_t *forks, t_philo *philo, int f)
 		return (ft_putstr_fd("Error : <Allocation>\n", 1), 1);
 	return (0);
 }
+
+

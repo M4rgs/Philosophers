@@ -38,7 +38,7 @@ int	init_args(t_infos *infos, char **av)
 	return (0);
 }
 
-void	death_checker(t_philo *philo)
+void	death_checker(t_philo *philo, pthread_mutex_t *forks)
 {
 	int	i;
 
@@ -47,6 +47,8 @@ void	death_checker(t_philo *philo)
 	{
 		if ((int)philo[i].infos->total_ate == philo[i].infos->num_philo)
 		{
+			//ft_dextroy_mutex(philo);
+			//ft_free_args(forks, philo, 0);
 			return ;
 		}
 		if ((size_t)timestamp() - philo[i].last_meal > \
@@ -56,6 +58,8 @@ void	death_checker(t_philo *philo)
 			pthread_mutex_lock(philo->print);
 			printf("%lu %d died\n", (size_t)timestamp() - \
 				philo->infos->start, philo->id);
+			//ft_dextroy_mutex(philo);
+			//ft_free_args(forks, philo, 0);
 			return ;
 		}
 		i = (i + 1) % philo->infos->num_philo;

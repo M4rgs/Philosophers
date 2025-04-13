@@ -55,5 +55,6 @@ void	*ft_routine(void *arg);
 long	timestamp(void);
 void	ft_eat(t_philo *philo);
 int		launch_threads(t_infos *infos, pthread_mutex_t *forks, t_philo *philo);
-void	death_checker(t_philo *philo);
+void	death_checker(t_philo *philo, pthread_mutex_t *forks);
+void	ft_dextroy_mutex(t_philo *philo);
 #endif

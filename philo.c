@@ -53,6 +53,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (launch_threads(&infos, forks, philo) == 1)
 		return (1);
-	death_checker(philo);
+	death_checker(philo, forks);
 	return (ft_free_args(forks, philo, 0));
 }
