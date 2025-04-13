@@ -46,12 +46,15 @@ void	death_checker(t_philo *philo)
 	while (1)
 	{
 		if ((int)philo[i].infos->total_ate == philo[i].infos->num_philo)
+		{
 			return ;
-		if ((size_t)timestamp() - philo[i].last_meal > philo->infos->to_die)
+		}
+		if ((size_t)timestamp() - philo[i].last_meal > \
+			(unsigned long)philo->infos->to_die)
 		{
 			usleep(100);
 			pthread_mutex_lock(philo->print);
-			printf("%ld %d died\n", (size_t)timestamp() - \
+			printf("%lu %d died\n", (size_t)timestamp() - \
 				philo->infos->start, philo->id);
 			return ;
 		}
