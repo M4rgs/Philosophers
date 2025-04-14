@@ -59,11 +59,8 @@ int	ft_atoi(char *s)
 	while (s[i])
 	{
 		resu = resu * 10 + (s[i] - 48);
-		if ((resu * signe > 2147483647 || resu * signe < -2147483648)
-			|| (s[i] < '0' || s[i] > '9'))
-		{
-			err_args(2);
-		}
+		if ((resu * signe > 2147483647 || resu * signe < -2147483648))
+			return (-1);
 		i++;
 	}
 	return (resu * signe);

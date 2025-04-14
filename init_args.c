@@ -77,7 +77,6 @@ int	init_mutex(t_philo *philo, t_infos *infos)
 	if (pthread_mutex_init(&pon, NULL))
 		return (ft_free_args(infos, philo, mutex, 1));
 	init_params(philo, infos, mutex, &pon);
-	free(mutex);
 	return (0);
 }
 
