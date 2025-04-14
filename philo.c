@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/11 04:06:51 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/14 05:58:00 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,25 @@ int	err_args(int f)
 int	main(int ac, char **av)
 {
 	t_infos			*infos;
-	pthread_t		*thread;
-	t_philo			*philo;
-	int				i;
 
 	if (ac < 5 || ac > 6)
 		return (err_args(1));
 	if (args_checker(av) == 1)
 		return (err_args(1));
-	infos = (t_infos *)malloc(sizeof(t_infos));
-	if (init_args(infos, av) == 1)
-		return (ft_free_args(infos, 0, 0, 1));
-	philo = (t_philo *)malloc(infos->num_philo * sizeof(t_philo));
-	if (init_mutex(philo, infos) == 1)
-		return (ft_free_args(infos, philo, 0, 1));
-	thread = (pthread_t *)malloc(infos->num_philo * sizeof(pthread_t));
-	if (!thread)
-		return (ft_free_args(infos, philo, 0, 1));
-	i = -1;
-	while (++i < infos->num_philo)
-		pthread_create(&thread[i], NULL, ft_routine, philo + i);
-	death_checker(philo, infos);
-	free(thread);
+	infos = malloc(sizeof(t_infos));
+	if (!infos)
+		return (1);
+	if (init_args(infos, av))
+		return (free(infos), 1);
+	infos->forks = malloc(sizeof(pthread_mutex_t) * infos->num_philo);
+	if (!infos->forks)
+		return (free(infos), 1);
+	infos->philo = malloc(sizeof(t_philo) * infos->num_philo);
+	if (!infos->philo)
+		return (free(infos->forks), free(infos), 1);
+	init_data(infos);
+	if (launch_threads(infos) == 1)
+		return (ft_free_args(infos), 1);
+	ft_free_args(infos);
 	return (0);
 }

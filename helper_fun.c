@@ -6,29 +6,19 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/11 04:08:12 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/14 06:00:30 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	timestamp(void)
+size_t	timing(void)
 {
 	struct timeval	time;
-	unsigned long	l;
-	unsigned long	s;
-	unsigned long	u;
 
-	gettimeofday(&time, NULL);
-	s = (time.tv_sec * 1000);
-	u = (time.tv_usec / 1000);
-	l = s + u;
-	return (l);
-}
-
-unsigned long	real_time(t_philo *philo)
-{
-	return (timestamp() - philo->infos->time);
+	if (gettimeofday(&time, NULL) == -1)
+		ft_putstr_fd("Error: gettimeofday :/ \n", 1);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -66,13 +56,37 @@ int	ft_atoi(char *s)
 	return (resu * signe);
 }
 
-int	ft_free_args(t_infos *infos, t_philo *philo, pthread_mutex_t *mutex, int f)
+int	ft_usleep(size_t ms, t_infos *infos)
 {
-	if (infos)
-		free(infos);
-	if (mutex)
-		free(mutex);
-	if (philo)
-		free(philo);
-	return (f);
+	size_t	start;
+
+	start = timing();
+	while ((timing() - start) < ms)
+	{
+		pthread_mutex_lock(&infos->dead_mutex);
+		if (infos->is_dead == 1)
+			return (pthread_mutex_unlock(&infos->dead_mutex), 0);
+		pthread_mutex_unlock(&infos->dead_mutex);
+		usleep(500);
+	}
+	return (0);
+}
+
+void	ft_free_args(t_infos *infos)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < infos->num_philo)
+	{
+		pthread_mutex_destroy(&infos->forks[i]);
+		pthread_mutex_destroy(&infos->philo[i].last_meal);
+		pthread_mutex_destroy(&infos->philo[i].count);
+	}
+	pthread_mutex_destroy(&infos->print);
+	pthread_mutex_destroy(&infos->dead_mutex);
+	pthread_mutex_destroy(&infos->full);
+	free(infos->forks);
+	free(infos->philo);
+	free(infos);
 }
