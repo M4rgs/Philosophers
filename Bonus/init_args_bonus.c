@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_args.c                                        :+:      :+:    :+:   */
+/*   init_args_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 21:06:35 by tamounir         ###   ########.fr       */
+/*   Created: 2025/04/16 21:25:29 by tamounir          #+#    #+#             */
+/*   Updated: 2025/04/17 10:20:46 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	init_args(t_infos *infos, char **av)
 {
@@ -38,49 +38,18 @@ void	init_data(t_infos *infos)
 	size_t	i;
 
 	i = -1;
-	pthread_mutex_init(&infos->print, NULL);
-	pthread_mutex_init(&infos->dead_mutex, NULL);
-	pthread_mutex_init(&infos->full, NULL);
 	infos->starting = timing();
 	infos->is_dead = 0;
-	infos->ending_flag = 0;
 	infos->total_ate = 0;
 	while (++i < infos->num_philo)
 	{
+        infos->philo[i].pid = fork();
+        if (infos->philo[i].pid == -1)
+            return ;
+        sem_init(&infos->philo[i].sema, 0, 1);
 		infos->philo[i].id = i + 1;
 		infos->philo[i].ate = 0;
 		infos->philo[i].last_time_eat = timing();
-		pthread_mutex_init(&infos->forks[i], NULL);
-		infos->philo[i].rfork = &infos->forks[i];
-		infos->philo[i].lfork = &infos->forks[(i + 1) % infos->num_philo];
 		infos->philo[i].infos = infos;
-		pthread_mutex_init(&infos->philo[i].count, NULL);
-		pthread_mutex_init(&infos->philo[i].last_meal, NULL);
-		pthread_mutex_init(&infos->forks[i], NULL);
 	}
-}
-
-int	launch_threads(t_infos *infos)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < infos->num_philo)
-	{
-		if (pthread_create(&infos->philo[i].id_thre,\
-			NULL, &ft_routine, &infos->philo[i]))
-			return (1);
-	}
-	i = -1;
-	if (pthread_create(&infos->death_checker,\
-		NULL, (void *)death_checker, infos))
-		return (1);
-	while (++i < infos->num_philo)
-	{
-		if (pthread_join(infos->philo[i].id_thre, NULL))
-			return (1);
-	}
-	if (pthread_join(infos->death_checker, NULL))
-		return (1);
-	return (0);
 }

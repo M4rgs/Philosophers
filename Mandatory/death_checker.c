@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 04:06:03 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/14 05:56:50 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:05:58 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,27 @@ void	*death_checker(t_infos *infos)
 				infos->total_ate++;
 				if (infos->total_ate >= infos->num_philo)
 				{
-					pthread_mutex_unlock(&infos->philo[i].count);
-					set_as_finished(infos);
-					return (NULL);
+					return (pthread_mutex_unlock(&infos->philo[i].count),
+						set_as_finished(infos), NULL);
 				}
-				pthread_mutex_unlock(&infos->philo[i].count);
+				else
+					pthread_mutex_unlock(&infos->philo[i].count);
 			}
-			pthread_mutex_unlock(&infos->philo[i].count);
+			else
+				pthread_mutex_unlock(&infos->philo[i].count);
 			if (is_dead(infos, &infos->philo[i]))
 				return (NULL);
 		}
 	}
 	return (NULL);
+}
+
+void	ft_one_philo(t_infos *infos, t_philo *philo)
+{
+	pthread_mutex_lock(&infos->print);
+	pthread_mutex_lock(&infos->dead_mutex);
+	printf("%lu %d has taken a fork\n", timing() - infos->starting, philo->id);
+	infos->is_dead = 1;
+	pthread_mutex_unlock(&infos->print);
+	pthread_mutex_unlock(&infos->dead_mutex);
 }

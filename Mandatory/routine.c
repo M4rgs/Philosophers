@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/14 05:57:09 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:56:12 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	taking_forks(t_infos *infos, t_philo *philo)
 {
-	if (infos->num_philo > 1)
-		pthread_mutex_lock(philo->lfork);
+	pthread_mutex_lock(philo->lfork);
 	pthread_mutex_lock(&infos->print);
 	pthread_mutex_lock(&infos->dead_mutex);
 	if (infos->is_dead == 1)
@@ -32,6 +31,7 @@ static int	taking_forks(t_infos *infos, t_philo *philo)
 	pthread_mutex_lock(&infos->dead_mutex);
 	if (infos->is_dead == 1)
 		return (pthread_mutex_unlock(philo->rfork),
+			pthread_mutex_unlock(philo->lfork),
 			pthread_mutex_unlock(&infos->print),
 			pthread_mutex_unlock(&infos->dead_mutex), 1);
 	printf("%lu %d has taken a fork\n", timing() - infos->starting, philo->id);
@@ -102,8 +102,13 @@ void	*ft_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	infos = philo->infos;
+	if (infos->num_philo == 1)
+	{
+		ft_one_philo(infos, philo);
+		return (NULL);
+	}
 	if (philo->id % 2 != 0)
-		ft_usleep(infos->to_eat / 2, infos);
+		usleep(10);
 	while (1)
 	{
 		if (taking_forks(infos, philo) == 1)

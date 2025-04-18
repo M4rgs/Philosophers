@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/14 06:00:48 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:56:35 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int				init_args(t_infos *infos, char **av);
 void			init_data(t_infos *infos);
 int				launch_threads(t_infos *infos);
 void			*ft_routine(void *arg);
+void			ft_one_philo(t_infos *infos, t_philo *philo);
 void			*death_checker(t_infos *infos);
 size_t			timing(void);
 int				ft_usleep(size_t milliseconds, t_infos *args);

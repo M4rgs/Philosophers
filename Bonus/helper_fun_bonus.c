@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   helper_fun_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:54:43 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/14 07:54:58 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:55:11 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+size_t	timing(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		ft_putstr_fd("Error: gettimeofday :/ \n", 1);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {
