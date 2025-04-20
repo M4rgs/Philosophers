@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:52:25 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/17 10:21:26 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:42:54 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo
 {
 	int		id;
 	size_t	ate;
+	pid_t	proccess_id;
 	size_t	last_time_eat;
 	t_infos	*infos;
 	sem_t	sema;

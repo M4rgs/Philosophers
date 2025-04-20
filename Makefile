@@ -9,8 +9,7 @@ CC = cc
 HEADER = Mandatory/philo.h
 HEADER_BONUS = Bonus/philo_bonus.h
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-
+CFLAGS = -Wall -Wextra -Werror -g
 OBJ = $(SRCS:.c=.o)
 OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 04:06:03 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 21:05:58 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/20 23:58:01 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ void	*death_checker(t_infos *infos)
 			{
 				infos->total_ate++;
 				if (infos->total_ate >= infos->num_philo)
-				{
 					return (pthread_mutex_unlock(&infos->philo[i].count),
 						set_as_finished(infos), NULL);
-				}
 				else
 					pthread_mutex_unlock(&infos->philo[i].count);
 			}

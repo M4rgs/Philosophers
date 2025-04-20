@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 21:06:35 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/21 00:46:03 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ int	launch_threads(t_infos *infos)
 	i = -1;
 	while (++i < infos->num_philo)
 	{
-		if (pthread_create(&infos->philo[i].id_thre,\
+		if (pthread_create(&infos->philo[i].id_thre, \
 			NULL, &ft_routine, &infos->philo[i]))
 			return (1);
 	}
 	i = -1;
-	if (pthread_create(&infos->death_checker,\
+	if (pthread_create(&infos->death_checker, \
 		NULL, (void *)death_checker, infos))
 		return (1);
 	while (++i < infos->num_philo)
 	{
-		if (pthread_join(infos->philo[i].id_thre, NULL))
+		if (pthread_join(infos->philo[i].id_thre, NULL) != 0)
 			return (1);
 	}
 	if (pthread_join(infos->death_checker, NULL))

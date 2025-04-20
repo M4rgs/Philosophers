@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 20:56:12 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/21 00:47:41 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	*ft_routine(void *arg)
 		return (NULL);
 	}
 	if (philo->id % 2 != 0)
-		usleep(10);
+		usleep(philo->infos->to_eat * 1000);
 	while (1)
 	{
 		if (taking_forks(infos, philo) == 1)
