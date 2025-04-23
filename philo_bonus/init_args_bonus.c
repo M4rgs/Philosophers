@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:25:29 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/20 23:14:19 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/23 04:12:08 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,6 @@ int	init_args(t_infos *infos, char **av)
 	return (0);
 }
 
-void	init_procc(t_infos *infos)
-{
-	int	i;
-	pid_t	pid;
-
-	i = 0;
-	sem_init(&infos->philo->sema, 0, 1);
-	while (i < infos->num_philo)
-	{
-		pid = fork();
-		if (pid == 0)
-			
-		
-	}
-}
-
 void	init_data(t_infos *infos)
 {
 	size_t	i;
@@ -59,10 +43,6 @@ void	init_data(t_infos *infos)
 	infos->total_ate = 0;
 	while (++i < infos->num_philo)
 	{
-        infos->philo[i].pid = fork();
-        if (infos->philo[i].pid == -1)
-            return ;
-        sem_init(&infos->philo[i].sema, 0, 1);
 		infos->philo[i].id = i + 1;
 		infos->philo[i].ate = 0;
 		infos->philo[i].last_time_eat = timing();

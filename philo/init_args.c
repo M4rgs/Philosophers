@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/21 00:46:03 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/23 04:01:24 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	init_args(t_infos *infos, char **av)
 	{
 		return (err_args(3));
 	}
+	if (infos->num_philo > 1000)
+	{
+		ft_putstr_fd("Error: <UP_MAX threads not allowed>\n ", 2);
+		return (1);
+	}
 	return (0);
 }
 
@@ -44,7 +49,6 @@ void	init_data(t_infos *infos)
 	infos->starting = timing();
 	infos->is_dead = 0;
 	infos->ending_flag = 0;
-	infos->total_ate = 0;
 	while (++i < infos->num_philo)
 	{
 		infos->philo[i].id = i + 1;
@@ -83,4 +87,23 @@ int	launch_threads(t_infos *infos)
 	if (pthread_join(infos->death_checker, NULL))
 		return (1);
 	return (0);
+}
+
+void	ft_free_args(t_infos *infos)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < infos->num_philo)
+	{
+		pthread_mutex_destroy(&infos->forks[i]);
+		pthread_mutex_destroy(&infos->philo[i].last_meal);
+		pthread_mutex_destroy(&infos->philo[i].count);
+	}
+	pthread_mutex_destroy(&infos->print);
+	pthread_mutex_destroy(&infos->dead_mutex);
+	pthread_mutex_destroy(&infos->full);
+	free(infos->forks);
+	free(infos->philo);
+	free(infos);
 }

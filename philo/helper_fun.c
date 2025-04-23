@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_fun.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 20:32:36 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/23 04:01:58 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	timing(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: gettimeofday :/ \n", 1);
+		ft_putstr_fd("Error: gettimeofday :/ \n", 2);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
@@ -72,21 +72,17 @@ int	ft_usleep(size_t ms, t_infos *infos)
 	return (0);
 }
 
-void	ft_free_args(t_infos *infos)
+void	printingg(t_philo *philo, t_infos *infos, int f)
 {
-	size_t	i;
-
-	i = -1;
-	while (++i < infos->num_philo)
-	{
-		pthread_mutex_destroy(&infos->forks[i]);
-		pthread_mutex_destroy(&infos->philo[i].last_meal);
-		pthread_mutex_destroy(&infos->philo[i].count);
-	}
-	pthread_mutex_destroy(&infos->print);
-	pthread_mutex_destroy(&infos->dead_mutex);
-	pthread_mutex_destroy(&infos->full);
-	free(infos->forks);
-	free(infos->philo);
-	free(infos);
+	pthread_mutex_lock(&infos->print);
+	if (f == 1)
+		printf("%lu %d has taken a fork\n", \
+			timing() - infos->starting, philo->id);
+	if (f == 2)
+		printf("%lu %d is sleeping\n", timing() - infos->starting, philo->id);
+	if (f == 3)
+		printf("%lu %d is eating\n", timing() - infos->starting, philo->id);
+	if (f == 4)
+		printf("%lu %d is thinking\n", timing() - infos->starting, philo->id);
+	pthread_mutex_unlock(&infos->print);
 }
