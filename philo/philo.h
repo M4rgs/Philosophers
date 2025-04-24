@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/23 04:04:39 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:08:28 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo
 {
 	int				id;
 	size_t			ate;
+	size_t			is_full;
 	size_t			last_time_eat;
 	pthread_t		id_thre;
 	pthread_mutex_t	*lfork;
@@ -64,6 +65,7 @@ void			*death_checker(t_infos *infos);
 size_t			timing(void);
 int				ft_usleep(size_t milliseconds, t_infos *args);
 void			ft_free_args(t_infos *infos);
+int				check_is_full(t_philo *philo);
 void			printingg(t_philo *philo, t_infos *infos, int f);
 
 #endif

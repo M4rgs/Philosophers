@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 04:06:03 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/23 04:01:46 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:07:57 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,17 @@ void	*death_checker(t_infos *infos)
 	size_t	i;
 	size_t	total_ate;
 
+	total_ate = 0;
 	while (1)
 	{
 		i = -1;
-		total_ate = 0;
 		while (++i < infos->num_philo)
 		{
 			pthread_mutex_lock(&infos->philo[i].count);
-			if (infos->must_eat <= infos->philo[i].ate)
+			if (infos->must_eat <= infos->philo[i].ate \
+				&& infos->philo[i].is_full == 0)
 			{
+				infos->philo[i].is_full = 1;
 				total_ate++;
 				if (total_ate >= infos->num_philo)
 					return (pthread_mutex_unlock(&infos->philo[i].count),
@@ -75,4 +77,17 @@ void	*ft_one_philo(t_infos *infos, t_philo *philo)
 	pthread_mutex_unlock(&infos->print);
 	pthread_mutex_unlock(&infos->dead_mutex);
 	return (NULL);
+}
+
+int	check_is_full(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->count);
+	if (philo->is_full == 1)
+	{
+		return (pthread_mutex_unlock(&philo->count),
+			pthread_mutex_unlock(philo->lfork),
+			pthread_mutex_unlock(philo->rfork), 1);
+	}
+	pthread_mutex_unlock(&philo->count);
+	return (0);
 }

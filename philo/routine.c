@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/23 04:00:15 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:07:46 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ static int	taking_forks(t_infos *infos, t_philo *philo)
 
 static int	eating(t_infos *infos, t_philo *philo)
 {
+	if (check_is_full(philo))
+		return (1);
 	pthread_mutex_lock(&infos->philo[philo->id - 1].last_meal);
 	infos->philo[philo->id - 1].last_time_eat = timing();
 	pthread_mutex_unlock(&infos->philo[philo->id - 1].last_meal);
 	pthread_mutex_lock(&infos->dead_mutex);
 	if (infos->is_dead == 1)
-		return (pthread_mutex_unlock(&infos->print),
-			pthread_mutex_unlock(&infos->dead_mutex),
+		return (pthread_mutex_unlock(&infos->dead_mutex),
 			pthread_mutex_unlock(philo->lfork),
 			pthread_mutex_unlock(philo->rfork), 1);
 	pthread_mutex_unlock(&infos->dead_mutex);
