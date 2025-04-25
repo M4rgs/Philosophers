@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/23 04:01:58 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/25 05:25:11 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 size_t	timing(void)
 {
-	struct timeval	time;
+	struct timeval		current_time;
+	unsigned long long	time;
 
-	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: gettimeofday :/ \n", 2);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	gettimeofday(&current_time, NULL);
+	time = (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
+	return (time);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -67,7 +68,7 @@ int	ft_usleep(size_t ms, t_infos *infos)
 		if (infos->is_dead == 1)
 			return (pthread_mutex_unlock(&infos->dead_mutex), 0);
 		pthread_mutex_unlock(&infos->dead_mutex);
-		usleep(500);
+		usleep(100);
 	}
 	return (0);
 }

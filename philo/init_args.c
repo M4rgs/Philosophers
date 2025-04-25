@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/24 05:51:39 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/25 03:14:50 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_data(t_infos *infos)
 	pthread_mutex_init(&infos->print, NULL);
 	pthread_mutex_init(&infos->dead_mutex, NULL);
 	pthread_mutex_init(&infos->full, NULL);
+	pthread_mutex_init(&infos->last_meal, NULL);
+	infos->last_time_eat = timing();
 	infos->starting = timing();
 	infos->is_dead = 0;
 	infos->ending_flag = 0;

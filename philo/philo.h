@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/24 06:08:28 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/25 04:58:55 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_infos
 	size_t			to_eat;
 	size_t			must_eat;
 	size_t			starting;
+	size_t			last_time_eat;
+	pthread_mutex_t	last_meal;
 	size_t			is_dead;
 	size_t			ending_flag;
 	pthread_mutex_t	full;
