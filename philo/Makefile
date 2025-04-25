@@ -6,7 +6,7 @@ CC = cc
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ = $(SRCS:.c=.o)
 
