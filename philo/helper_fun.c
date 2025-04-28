@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/25 05:25:11 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/28 05:12:45 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 size_t	timing(void)
 {
-	struct timeval		current_time;
-	unsigned long long	time;
+	struct timeval	time;
 
-	gettimeofday(&current_time, NULL);
-	time = (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
-	return (time);
+	if (gettimeofday(&time, NULL) == -1)
+		printf("gettimeofday() error\n");
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -68,22 +67,7 @@ int	ft_usleep(size_t ms, t_infos *infos)
 		if (infos->is_dead == 1)
 			return (pthread_mutex_unlock(&infos->dead_mutex), 0);
 		pthread_mutex_unlock(&infos->dead_mutex);
-		usleep(100);
+		usleep(500);
 	}
 	return (0);
-}
-
-void	printingg(t_philo *philo, t_infos *infos, int f)
-{
-	pthread_mutex_lock(&infos->print);
-	if (f == 1)
-		printf("%lu %d has taken a fork\n", \
-			timing() - infos->starting, philo->id);
-	if (f == 2)
-		printf("%lu %d is sleeping\n", timing() - infos->starting, philo->id);
-	if (f == 3)
-		printf("%lu %d is eating\n", timing() - infos->starting, philo->id);
-	if (f == 4)
-		printf("%lu %d is thinking\n", timing() - infos->starting, philo->id);
-	pthread_mutex_unlock(&infos->print);
 }
