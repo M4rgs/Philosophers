@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/21 22:32:05 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/28 05:48:36 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	err_args(int f)
 	{
 		ft_putstr_fd("Error : <arguments>\n Params should be\
 		 > 0 && < INT_MAX\n", 2);
+		return (1);
+	}
+	if (f == 4)
+	{
+		ft_putstr_fd("Error: <UP_MAX threads not allowed>\n ", 2);
 		return (1);
 	}
 	return (0);
