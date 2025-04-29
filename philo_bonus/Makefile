@@ -1,6 +1,6 @@
 NAME_BONUS = philo_bonus
 
-SRCS_BONUS = philo_bonus.c helper_fun_bonus.c init_args_bonus.c
+SRCS_BONUS = philo_bonus.c helper_fun_bonus.c init_args_bonus.c routine_bonus.c
 
 CC = cc
 

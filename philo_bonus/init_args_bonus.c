@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:25:29 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/23 04:12:08 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/29 04:34:48 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,45 @@ int	init_args(t_infos *infos, char **av)
 	return (0);
 }
 
-void	init_data(t_infos *infos)
+int	init_data(t_infos *infos)
 {
 	size_t	i;
 
 	i = -1;
+	sem_unlink("forks_sema");
+	sem_unlink("print_sema");
+	sem_unlink("last_meal_sema");
+	sem_unlink("meal_count_sema");
+	infos->forks = sem_open("forks_sema", O_CREAT, 0644, infos->num_philo);
+	infos->print = sem_open("print_sema", O_CREAT, 0644, 1);
+	infos->last_meal = sem_open("last_meal_sema", O_CREAT, 0644, 1);
+	infos->count = sem_open("meal_count_sema", O_CREAT, 0644, 1);
+	if (!infos->forks || !infos->print || !infos->last_meal || !infos->count)
+		return (1);
 	infos->starting = timing();
-	infos->is_dead = 0;
-	infos->total_ate = 0;
 	while (++i < infos->num_philo)
 	{
 		infos->philo[i].id = i + 1;
 		infos->philo[i].ate = 0;
+		infos->philo[i].pid = -1;
 		infos->philo[i].last_time_eat = timing();
 		infos->philo[i].infos = infos;
 	}
+	return (0);
+}
+
+int	proccess_init(t_infos *infos)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < infos->num_philo)
+	{
+		infos->philo[i].pid = fork();
+		if (infos->philo[i].pid == 0)
+			ft_routine(infos, &infos->philo[i]);
+		else if (infos->philo[i].pid < 0)
+			return (1);
+	}
+	return (0);
 }

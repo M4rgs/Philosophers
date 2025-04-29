@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:51:22 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/17 10:22:38 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/29 04:15:55 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ int	main(int ac, char **av)
 	infos->philo = malloc(sizeof(t_philo) * infos->num_philo);
 	if (!infos->philo)
 		return (free(infos), 1);
-	init_data(infos);
+	if (init_data(infos) == 1)
+		return (1);
+	if (proccess_init(infos) == 1)
+		return (1);
+	kill_and_close(infos);
+	free(infos->philo);
+	free(infos);
 	return (0);
 }

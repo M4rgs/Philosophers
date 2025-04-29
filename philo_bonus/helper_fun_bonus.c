@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_fun_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamounir <tamounir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:54:43 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/18 20:55:11 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:46:12 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,42 @@ int	ft_atoi(char *s)
 		i++;
 	}
 	return (resu * signe);
+}
+
+int	ft_usleep(size_t ms)
+{
+	size_t	start;
+
+	start = timing();
+	while ((timing() - start) < ms)
+		usleep(500);
+	return (0);
+}
+
+void	kill_and_close(t_infos *infos)
+{
+	size_t	i;
+	int		status;
+
+	status = 0;
+	i = -1;
+	while (++i < infos->num_philo)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status))
+		{
+			i = -1;
+			while (++i < infos->num_philo)
+				kill(infos->philo[i].pid, SIGKILL);
+			break ;
+		}
+	}
+	sem_close(infos->forks);
+	sem_close(infos->print);
+	sem_close(infos->last_meal);
+	sem_close(infos->count);
+	sem_unlink("forks_sema");
+	sem_unlink("print_sema");
+	sem_unlink("last_meal_sema");
+	sem_unlink("meal_count_sema");
 }
