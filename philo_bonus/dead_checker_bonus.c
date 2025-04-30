@@ -6,42 +6,29 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 04:25:37 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/29 04:36:12 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/30 01:53:14 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	is_dead(t_infos *infos, t_philo *philo)
+void	*is_dead(void *args)
 {
-	sem_wait(infos->last_meal);
-	if (get_time() - philo->last_time_eat >= infos->to_die)
-	{
-		printf("%zu %d died\n", get_time() - infos->starting, philo->id);
-		sem_post(infos->last_meal);
-		return (1);
-	}
-	sem_post(infos->last_meal);
-	return (0);
-}
+	t_philo	*philo;
+	size_t	last_eat;
 
-void	*monitor(void *argss)
-{
-	t_infos	*infos;
-
-	infos = (t_infos *)argss;
+	philo = (t_philo *)args;
 	while (1)
 	{
-		usleep(100);
-		sem_wait(infos->count);
-		if (infos->philo[infos->index].ate >= infos->must_eat)
+		sem_wait(philo->infos->last_meal);
+		last_eat = philo->last_time_eat;
+		sem_post(philo->infos->last_meal);
+		if (timing() - last_eat > philo->infos->to_die)
 		{
-			sem_post(infos->count);
-			exit(0);
-		}
-		sem_post(infos->count);
-		if (is_dead(infos, infos->philo + infos->index))
+			printing(philo->infos, philo, "died", 1);
 			exit(1);
+		}
+		ft_usleep(philo->infos->to_eat);
 	}
 	return (NULL);
 }

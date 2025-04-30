@@ -6,11 +6,22 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:51:22 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/29 04:15:55 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/04/30 01:56:19 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	printing(t_infos *infos, t_philo *philo, char *msg, int dead)
+{
+	size_t	time;
+
+	time = timing() - philo->infos->starting;
+	sem_wait(infos->print);
+	printf("%ld %d %s\n", time, philo->id, msg);
+	if (dead == 0)
+		sem_post(infos->print);
+}
 
 static int	args_checker(char **av)
 {
