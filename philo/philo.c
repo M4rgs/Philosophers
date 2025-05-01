@@ -6,12 +6,11 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/28 05:48:36 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:57:32 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 static int	args_checker(char **av)
 {

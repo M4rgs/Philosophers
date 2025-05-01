@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/28 05:56:40 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:58:29 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	launch_threads(t_infos *infos)
 	while (++i < infos->num_philo)
 	{
 		if (pthread_create(&infos->philo[i].id_thre, \
-			NULL, &ft_routine, &infos->philo[i]))
+			NULL, ft_routine, &infos->philo[i]))
 			return (1);
 	}
 	i = -1;

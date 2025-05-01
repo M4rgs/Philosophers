@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 04:06:03 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/28 06:36:17 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:42:09 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,25 @@ static int	is_dead(t_infos *infos, t_philo *philo)
 	return (0);
 }
 
-static void	set_as_finished(t_infos *infos)
+static int	is_hungry(t_infos *infos, t_philo *philo, size_t *total_ate)
 {
-	pthread_mutex_lock(&infos->full);
-	infos->ending_flag = 1;
-	pthread_mutex_unlock(&infos->full);
+	pthread_mutex_lock(&philo->count);
+	if (infos->must_eat <= philo->ate \
+		&& philo->is_full == 0)
+	{
+		philo->is_full = 1;
+		*total_ate += 1;
+		if (*total_ate >= infos->num_philo)
+		{
+			pthread_mutex_unlock(&philo->count);
+			pthread_mutex_lock(&infos->full);
+			infos->ending_flag = 1;
+			pthread_mutex_unlock(&infos->full);
+			return (1);
+		}
+	}
+	pthread_mutex_unlock(&philo->count);
+	return (0);
 }
 
 void	*death_checker(t_infos *infos)
@@ -45,22 +59,14 @@ void	*death_checker(t_infos *infos)
 	total_ate = 0;
 	while (1)
 	{
-		i = -1;
-		while (++i < infos->num_philo)
+		i = 0;
+		while (i < infos->num_philo)
 		{
-			pthread_mutex_lock(&infos->philo[i].count);
-			if (infos->must_eat <= infos->philo[i].ate \
-				&& infos->philo[i].is_full == 0)
-			{
-				infos->philo[i].is_full = 1;
-				total_ate++;
-				if (total_ate >= infos->num_philo)
-					return (pthread_mutex_unlock(&infos->philo[i].count),
-						set_as_finished(infos), NULL);
-			}
-			pthread_mutex_unlock(&infos->philo[i].count);
+			if (is_hungry(infos, &infos->philo[i], &total_ate))
+				return (NULL);
 			if (is_dead(infos, &infos->philo[i]))
 				return (NULL);
+			i++;
 		}
 	}
 	return (NULL);
