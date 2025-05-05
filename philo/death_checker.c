@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 04:06:03 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/01 23:42:09 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/05 06:06:14 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ static int	is_hungry(t_infos *infos, t_philo *philo, size_t *total_ate)
 	return (0);
 }
 
-void	*death_checker(t_infos *infos)
+void	*monitor(void *arg)
 {
 	size_t	i;
 	size_t	total_ate;
+	t_infos	*infos;
 
+	infos = (t_infos *)arg;
 	total_ate = 0;
 	while (1)
 	{

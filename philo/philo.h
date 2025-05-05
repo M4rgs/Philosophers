@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/28 05:12:53 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/05 06:06:35 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			init_data(t_infos *infos);
 int				launch_threads(t_infos *infos);
 void			*ft_routine(void *arg);
 void			*ft_one_philo(t_infos *infos, t_philo *philo);
-void			*death_checker(t_infos *infos);
+void			*monitor(void *arg);
 size_t			timing(void);
 int				ft_usleep(size_t milliseconds, t_infos *args);
 void			ft_free_args(t_infos *infos);

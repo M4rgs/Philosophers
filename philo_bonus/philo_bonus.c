@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:51:22 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/30 01:56:19 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/05 06:02:07 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	main(int ac, char **av)
 	if (!infos->philo)
 		return (free(infos), 1);
 	if (init_data(infos) == 1)
-		return (1);
+		return (kill_and_close(infos), 1);
 	if (proccess_init(infos) == 1)
-		return (1);
+		return (kill_and_close(infos), 1);
 	kill_and_close(infos);
 	free(infos->philo);
 	free(infos);

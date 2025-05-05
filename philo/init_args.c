@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/01 21:58:29 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/05 06:06:21 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	launch_threads(t_infos *infos)
 	}
 	i = -1;
 	if (pthread_create(&infos->death_checker, \
-		NULL, (void *)death_checker, infos))
+		NULL, monitor, infos))
 		return (1);
 	while (++i < infos->num_philo)
 	{
@@ -103,6 +103,7 @@ void	ft_free_args(t_infos *infos)
 	pthread_mutex_destroy(&infos->print);
 	pthread_mutex_destroy(&infos->dead_mutex);
 	pthread_mutex_destroy(&infos->full);
+	pthread_mutex_destroy(&infos->last_meal);
 	free(infos->forks);
 	free(infos->philo);
 	free(infos);
