@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/28 05:42:43 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:48:21 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,12 @@ int	ft_atoi(char *s)
 	return (resu * signe);
 }
 
-int	ft_usleep(size_t ms, t_infos *infos)
+int	ft_usleep(size_t ms)
 {
 	size_t	start;
 
 	start = timing();
 	while ((timing() - start) < ms)
-	{
-		pthread_mutex_lock(&infos->dead_mutex);
-		if (infos->is_dead == 1)
-			return (pthread_mutex_unlock(&infos->dead_mutex), 0);
-		pthread_mutex_unlock(&infos->dead_mutex);
-		usleep(500);
-	}
+		usleep(800);
 	return (0);
 }

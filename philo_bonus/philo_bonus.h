@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:52:25 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/05 05:58:39 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:49:25 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <signal.h>
+# include <fcntl.h>
+# include <wait.h>
 
 typedef struct s_philo	t_philo;
 
