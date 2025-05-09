@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:03:59 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/08 16:38:57 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:12:08 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ size_t			timing(void);
 int				ft_usleep(size_t ms);
 void			ft_free_args(t_infos *infos);
 int				check_is_full(t_philo *philo);
+void			mutex_life(pthread_mutex_t **first,
+					pthread_mutex_t **second, t_philo *philo);
 
 #endif

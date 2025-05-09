@@ -6,7 +6,7 @@ CC = cc
 
 HEADER_BONUS = philo_bonus.h
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 
 OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 
