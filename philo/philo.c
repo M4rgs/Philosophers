@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:07:46 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/09 22:40:17 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/10 05:11:27 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	err_args(int f)
 	}
 	if (f == 4)
 	{
-		ft_putstr_fd("Error: <UP_MAX threads not allowed>\n ", 2);
+		ft_putstr_fd("Error: <UP_MAX threads not allowed>\n", 2);
 		return (1);
 	}
 	return (0);
