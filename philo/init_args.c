@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/11 18:31:44 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/12 04:23:52 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	init_data(t_infos *infos)
 		infos->philo[i].ate = 0;
 		infos->philo[i].is_full = 0;
 		infos->philo[i].last_time_eat = timing();
-		pthread_mutex_init(&infos->forks[i], NULL);
 		infos->philo[i].rfork = &infos->forks[i];
 		infos->philo[i].lfork = &infos->forks[(i + 1) % infos->num_philo];
 		infos->philo[i].infos = infos;
