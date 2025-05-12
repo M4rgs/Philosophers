@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 02:46:09 by tamounir          #+#    #+#             */
-/*   Updated: 2025/04/30 01:52:24 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:02:34 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	is_eating(t_infos *infos, t_philo *philo)
 	sem_wait(infos->forks);
 	printing(infos, philo, "has taken a fork", 0);
 	sem_wait(infos->last_meal);
-	philo->last_time_eat = timing();
+	philo->last_time_eat = timing(infos);
 	sem_post(infos->last_meal);
 	printing(infos, philo, "is eating", 0);
 	sem_wait(infos->count);
 	philo->ate++;
 	sem_post(infos->count);
-	ft_usleep(infos->to_eat);
+	ft_usleep(infos->to_eat, infos);
 	sem_post(infos->forks);
 	sem_post(infos->forks);
 	if (aten_meals(philo) == philo->infos->must_eat)
@@ -46,7 +46,7 @@ static void	is_eating(t_infos *infos, t_philo *philo)
 static void	is_sleeping(t_infos *infos, t_philo *philo)
 {
 	printing(infos, philo, "is sleeping", 0);
-	ft_usleep(infos->to_sleep);
+	ft_usleep(infos->to_sleep, infos);
 }
 
 static void	is_thinking(t_infos *infos, t_philo *philo)

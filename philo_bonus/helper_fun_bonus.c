@@ -6,18 +6,21 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:54:43 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/09 00:34:15 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:09:20 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-size_t	timing(void)
+size_t	timing(t_infos *infos)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
+	{
 		ft_putstr_fd("Error: gettimeofday :/ \n", 1);
+		kill_and_close(infos);
+	}
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
@@ -56,12 +59,12 @@ int	ft_atoi(char *s)
 	return (resu * signe);
 }
 
-int	ft_usleep(size_t ms)
+int	ft_usleep(size_t ms, t_infos *infos)
 {
 	size_t	start;
 
-	start = timing();
-	while ((timing() - start) < ms)
+	start = timing(infos);
+	while ((timing(infos) - start) < ms)
 		usleep(800);
 	return (0);
 }
@@ -84,12 +87,5 @@ void	kill_and_close(t_infos *infos)
 			break ;
 		}
 	}
-	sem_close(infos->forks);
-	sem_close(infos->print);
-	sem_close(infos->last_meal);
-	sem_close(infos->count);
-	sem_unlink("forks_sema");
-	sem_unlink("print_sema");
-	sem_unlink("last_meal_sema");
-	sem_unlink("meal_count_sema");
+	sem_destroyy(infos);
 }

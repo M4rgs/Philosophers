@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:25:29 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/09 22:36:24 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:00:31 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	init_data(t_infos *infos)
 	infos->count = sem_open("meal_count_sema", O_CREAT, 0644, 1);
 	if (!infos->forks || !infos->print || !infos->last_meal || !infos->count)
 		return (1);
-	infos->starting = timing();
+	infos->starting = timing(infos);
 	while (++i < infos->num_philo)
 	{
 		infos->philo[i].id = i + 1;
 		infos->philo[i].ate = 0;
 		infos->philo[i].pid = -1;
-		infos->philo[i].last_time_eat = timing();
+		infos->philo[i].last_time_eat = timing(infos);
 		infos->philo[i].infos = infos;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/09 18:10:42 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:03:31 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ size_t	timing(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
+	{
 		printf("gettimeofday() error\n");
+		return (0);
+	}
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
@@ -64,19 +67,4 @@ int	ft_usleep(size_t ms)
 	while ((timing() - start) < ms)
 		usleep(800);
 	return (0);
-}
-
-void	mutex_life(pthread_mutex_t **first,
-		pthread_mutex_t **second, t_philo *philo)
-{
-	if (philo->lfork > philo->rfork)
-	{
-		*first = philo->lfork;
-		*second = philo->rfork;
-	}
-	else
-	{
-		*first = philo->rfork;
-		*second = philo->lfork;
-	}
 }

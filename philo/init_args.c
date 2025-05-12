@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/10 05:12:25 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:31:44 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	init_args(t_infos *infos, char **av)
 	}
 	if (infos->num_philo > 200)
 		return (err_args(4));
+	infos->last_time_eat = timing();
+	{
+		if (infos->last_time_eat == 0)
+			return (1);
+	}
 	return (0);
 }
 
@@ -44,7 +49,6 @@ void	init_data(t_infos *infos)
 	pthread_mutex_init(&infos->dead_mutex, NULL);
 	pthread_mutex_init(&infos->full, NULL);
 	pthread_mutex_init(&infos->last_meal, NULL);
-	infos->last_time_eat = timing();
 	infos->starting = timing();
 	infos->is_dead = 0;
 	infos->ending_flag = 0;
@@ -104,7 +108,10 @@ void	ft_free_args(t_infos *infos)
 	pthread_mutex_destroy(&infos->dead_mutex);
 	pthread_mutex_destroy(&infos->full);
 	pthread_mutex_destroy(&infos->last_meal);
-	free(infos->forks);
-	free(infos->philo);
-	free(infos);
+	if (infos->philo)
+		free(infos->philo);
+	if (infos)
+		free(infos);
+	if (infos->forks)
+		free(infos->forks);
 }

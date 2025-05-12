@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/09 18:11:29 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:02:56 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 static int	taking_forks(t_infos *infos, t_philo *philo)
 {
-	pthread_mutex_t	*first;
-	pthread_mutex_t	*second;
-
-	mutex_life(&first, &second, philo);
-	pthread_mutex_lock(first);
+	pthread_mutex_lock(philo->lfork);
 	pthread_mutex_lock(&infos->print);
 	pthread_mutex_lock(&infos->dead_mutex);
 	if (infos->is_dead == 1)
-		return (pthread_mutex_unlock(first),
+		return (pthread_mutex_unlock(philo->lfork),
 			pthread_mutex_unlock(&infos->dead_mutex),
 			pthread_mutex_unlock(&infos->print), 1);
 	printf("%lu %d has taken a fork\n", timing() - infos->starting, philo->id);
 	pthread_mutex_unlock(&infos->dead_mutex);
 	pthread_mutex_unlock(&infos->print);
-	pthread_mutex_lock(second);
+	pthread_mutex_lock(philo->rfork);
 	pthread_mutex_lock(&infos->print);
 	pthread_mutex_lock(&infos->dead_mutex);
 	if (infos->is_dead == 1)
-		return (pthread_mutex_unlock(first),
-			pthread_mutex_unlock(second),
+		return (pthread_mutex_unlock(philo->lfork),
+			pthread_mutex_unlock(philo->rfork),
 			pthread_mutex_unlock(&infos->dead_mutex),
 			pthread_mutex_unlock(&infos->print), 1);
 	printf("%lu %d has taken a fork\n", timing() - infos->starting, philo->id);

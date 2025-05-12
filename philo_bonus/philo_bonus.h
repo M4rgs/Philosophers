@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:52:25 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/08 16:49:25 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:09:58 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ int				init_args(t_infos *infos, char **av);
 int				init_data(t_infos *infos);
 int				proccess_init(t_infos *infos);
 void			ft_routine(t_infos *infos, t_philo *philo);
-size_t			timing(void);
-int				ft_usleep(size_t ms);
+size_t			timing(t_infos *infos);
+int				ft_usleep(size_t ms, t_infos *infos);
 void			*is_dead(void *args);
 void			printing(t_infos *infos, t_philo *philo, char *msg, int dead);
 void			kill_and_close(t_infos *infos);
+void			sem_destroyy(t_infos *infos);
 
 #endif
