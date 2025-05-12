@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 01:05:19 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/12 02:02:56 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:19:45 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	*ft_routine(void *arg)
 	if (infos->num_philo == 1)
 		return (ft_one_philo(infos, philo));
 	if (philo->id % 2 == 0)
-		ft_usleep(infos->to_eat);
+		ft_usleep(infos->to_eat / 2);
 	while (1)
 	{
 		if (taking_forks(infos, philo) == 1)

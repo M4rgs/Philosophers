@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:14:17 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/12 02:03:31 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:20:59 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	ft_usleep(size_t ms)
 
 	start = timing();
 	while ((timing() - start) < ms)
-		usleep(800);
+		usleep(500);
 	return (0);
 }
