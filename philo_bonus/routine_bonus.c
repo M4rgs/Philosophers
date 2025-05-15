@@ -6,25 +6,17 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 02:46:09 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/11 18:02:34 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/15 03:52:43 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static size_t	aten_meals(t_philo *philo)
+static void	is_eating(t_infos *infos, t_philo *philo)
 {
 	size_t	meals;
 
 	meals = 0;
-	sem_wait(philo->infos->count);
-	meals = philo->ate;
-	sem_post(philo->infos->count);
-	return (meals);
-}
-
-static void	is_eating(t_infos *infos, t_philo *philo)
-{
 	sem_wait(infos->forks);
 	printing(infos, philo, "has taken a fork", 0);
 	sem_wait(infos->forks);
@@ -39,7 +31,10 @@ static void	is_eating(t_infos *infos, t_philo *philo)
 	ft_usleep(infos->to_eat, infos);
 	sem_post(infos->forks);
 	sem_post(infos->forks);
-	if (aten_meals(philo) == philo->infos->must_eat)
+	sem_wait(philo->infos->count);
+	meals = philo->ate;
+	sem_post(philo->infos->count);
+	if (meals == philo->infos->must_eat)
 		exit(0);
 }
 
