@@ -6,7 +6,7 @@
 /*   By: tamounir <tamounir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:10:10 by tamounir          #+#    #+#             */
-/*   Updated: 2025/05/12 04:23:52 by tamounir         ###   ########.fr       */
+/*   Updated: 2025/05/15 00:52:35 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	ft_free_args(t_infos *infos)
 	pthread_mutex_destroy(&infos->last_meal);
 	if (infos->philo)
 		free(infos->philo);
-	if (infos)
-		free(infos);
 	if (infos->forks)
 		free(infos->forks);
+	if (infos)
+		free(infos);
 }
